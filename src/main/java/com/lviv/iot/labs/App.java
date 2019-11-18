@@ -2,7 +2,6 @@ package com.lviv.iot.labs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -30,7 +29,7 @@ public class App
             CareerTree careerTree = new CareerTree(treeHeight);
 
             for (int i = 0; i < treeHeight; i++) {
-                careerTree.getCareerVertical().add(new CareerHorizontal());
+                careerTree.getCareerVertical().add(new CareerRow());
                 for(int j = 0; j <= i; j++) {
                     careerTree.getCareerVertical().get(i).getValues().add(new CareerPoint(scanner.nextInt()));
                 }

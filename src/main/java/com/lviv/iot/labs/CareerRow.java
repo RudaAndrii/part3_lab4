@@ -8,9 +8,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CareerHorizontal {
+public class CareerRow {
     private List<CareerPoint> values;
-    public CareerHorizontal() {
+    public CareerRow() {
         values = new ArrayList<>();
     }
 

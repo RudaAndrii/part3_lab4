@@ -2,8 +2,6 @@ package com.lviv.iot.labs;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,7 +11,7 @@ import java.util.List;
 @Setter
 public class CareerTree {
     private Integer height;
-    private List<CareerHorizontal> careerVertical;
+    private List<CareerRow> careerVertical;
 
     public CareerTree(Integer height) {
         this.height = height;
@@ -28,25 +26,28 @@ public class CareerTree {
     }
 
     public Integer getMaxCareerValueForNodes() {
-        for (int row = 0; row < height; row++) {
-            int rowLength = careerVertical.get(row).getValues().size();
+        for (int rowIndex = 0; rowIndex < height; rowIndex++) {
+            int rowLength = careerVertical.get(rowIndex).getValues().size();
 
-            for(int i = 0; i < rowLength; i++) {
-                if (row == 0) {
-                    CareerPoint careerPoint = careerVertical.get(row).getValues().get(i);
+            for(int pointIndex = 0; pointIndex < rowLength; pointIndex++) {
+                if (rowIndex == 0) {
+                    CareerPoint careerPoint = careerVertical.get(rowIndex).getValues().get(pointIndex);
                     careerPoint.setMaxValue(careerPoint.getValue());
-                    careerVertical.get(row).getValues().set(i, careerPoint);
+                    careerVertical.get(rowIndex).getValues().set(pointIndex, careerPoint);
                 } else {
-                    CareerPoint careerPoint = careerVertical.get(row).getValues().get(i);
-                    if (i == 0) {
-                        CareerPoint parentPoint = careerVertical.get(row - 1).getValues().get(i);
+                    CareerPoint careerPoint = careerVertical.get(rowIndex).getValues().get(pointIndex);
+                    if (pointIndex == 0) {
+                        CareerPoint parentPoint = careerVertical.get(rowIndex - 1).getValues().get(pointIndex);
+
                         careerPoint.setMaxValue(parentPoint.getMaxValue() + careerPoint.getValue());
-                    } else if (i == rowLength - 1) {
-                        CareerPoint parentPoint = careerVertical.get(row - 1).getValues().get(i - 1);
+                    } else if (pointIndex == rowLength - 1) {
+                        CareerPoint parentPoint = careerVertical.get(rowIndex - 1).getValues().get(pointIndex - 1);
+
                         careerPoint.setMaxValue(parentPoint.getMaxValue() + careerPoint.getValue());
                     } else {
-                        CareerPoint leftParentPoint = careerVertical.get(row - 1).getValues().get(i - 1);
-                        CareerPoint rightParentPoint = careerVertical.get(row - 1).getValues().get(i);
+                        CareerPoint leftParentPoint = careerVertical.get(rowIndex - 1).getValues().get(pointIndex - 1);
+                        CareerPoint rightParentPoint = careerVertical.get(rowIndex - 1).getValues().get(pointIndex);
+
                         careerPoint.setMaxValue(Math.max(leftParentPoint.getMaxValue(), rightParentPoint.getMaxValue()) + careerPoint.getValue());
                     }
                 }
